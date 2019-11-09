@@ -64,9 +64,36 @@ class extension_reflecteduploadfield extends Extension
                 'page' => '/frontend/' ,
                 'delegate' => 'EventPostSaveFilter' ,
                 'callback' => 'compileFields'
-            )
+            ),
+            array(
+      				'page' => '/backend/',
+      				'delegate' => 'InitaliseAdminPageHead',
+      				'callback' => 'appendAssets'
+      			)
         );
     }
+
+
+
+    /**
+		 *
+		 * Appends javascript file references into the head, if needed
+		 * @param array $context
+		 */
+		public function appendAssets(array $context) {
+			// store the callback array locally
+			$c = Administration::instance()->getPageCallback();
+
+			// publish page
+			if($c['driver'] == 'publish') {
+				Administration::instance()->Page->addScriptToHead(
+					URL . '/extensions/reflecteduploadfield/assets/publish.reflecteduploadfield.js',
+					time(),
+					false
+				);
+			}
+		}
+
 
     /**
      * COMPILE FIELDS (delegate callback)
