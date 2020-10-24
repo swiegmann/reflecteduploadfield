@@ -135,7 +135,7 @@ class FieldReflectedUpload extends FieldUpload
     public function checkPostFieldData($data , &$message , $entry_id = NULL)
     {
         extension_reflecteduploadfield::registerField($this);
-        return self::__OK__;
+        return parent::checkPostFieldData($data, $message, $entry_id);
     }
 
     /**
